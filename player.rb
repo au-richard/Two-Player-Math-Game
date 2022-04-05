@@ -1,16 +1,15 @@
 require './question'
 
 class Player
-  def initialize(numLives)
+  attr_accessor :playerId
+  def initialize(numLives, playerId)
     @numLives = numLives - 1
+    @playerId = playerId
   end
 
-  def calculate()
-    userInput = gets.chomp
-    if (userInput == (Question.num1 + Question.num2))
-      # next question
-    else
-      numLives
-    end
+  def decreaseLife()
+    
   end
+
+
 end
