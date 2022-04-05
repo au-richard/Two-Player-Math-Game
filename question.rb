@@ -1,23 +1,17 @@
-require './game'
-
 class Question
+  attr_reader :num1, :num2
   def initialize()
     @num1 = rand(1...20)
     @num2 = rand(1...20)
+    @expectedOutput = @num1 + @num2
   end
 
-  def prompt()
-    return "What is #{@num1} + #{@num2}?"
+  def prompt(name)
+    puts "#{name}: What is #{@num1} + #{@num2}?"
   end
 
   def verifyAnswer(playerInput)
-    expectedOutput = @num1 + @num2
-    # puts expectedOutput
-    # puts playerInput
-    # raise expectedOutput.inspect
-    # raise playerInput.inspect
-
-    return expectedOutput === playerInput.to_i
-
+    @expectedOutput === playerInput.to_i
   end
+
 end

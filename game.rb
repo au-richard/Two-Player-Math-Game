@@ -1,49 +1,43 @@
-require './question'
 require './player'
 
-
 class Game
+  attr_accessor :score
   def initialize()
-    @player1 = Player.new(3, 1)
-    @player2 = Player.new(3, 2)
-    @currentPlayer = @player1 
-    @alive = true
+    @player1 = Player.new("Player 1")
+    @player2 = Player.new("Player 2")
   end
- 
+
   def start
-    puts 'Welcome to my game'
-    # raise @currentPlayer.inspect
-    newQuestion = Question.new
-    mathQuestion = "Player #{@currentPlayer.playerId}: #{newQuestion.prompt}"
-    puts mathQuestion
-    playerInput = gets.chomp()
-    # puts newQuestion.verifyAnswer(playerInput)
-    isCorrect = newQuestion.verifyAnswer(playerInput)
+    puts "Starting the game"
+    currentGame
+  end
 
-    
-    if (isCorrect)
-      puts 'Yes! You are correct!'
-      if(@currentPlayer.playerId === @player1.playerId)
-        @currentPlayer = @player2
-        puts mathQuestion
-      else
-        @currentPlayer = @player1
-        puts mathQuestion
-      end
+  def currentGame
+    @player1.askQuestion
+    @player2.askQuestion
+    checkScore
+    checkLives
+    puts "-----NEW TURN-----"
+    currentGame
+  end 
+
+  def checkScore
+    puts "Player #{@player1.name}: #{@player1.numLives}/3 vs. #{@player2.name}: #{@player2.numLives}/3 "
+  end
+
+  def checkLives
+    if @player1.lost 
+      puts "Player #{@player2.name} wins with a score of #{@player2.numLives}/3"  
+      puts "----GAME OVER----"
+      exit(0)
+         
+    end  
+    if @player2.lost
+      puts "#{@player1.name} wins with a score of #{@player1.numLives}/3"  
+      puts "----GAME OVER----"
+      exit(0)
     end
+
   end
-
-
-  def finished
-    puts 'Player 1 wins with a score of 1/3'
-    puts '----- GAME OVER -----'
-    puts 'Good Bye!'
-  end
-
 
 end
-
-
-# update current player
-# update alive variable
-# update players lives
